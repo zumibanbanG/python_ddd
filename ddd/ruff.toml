@@ -1,0 +1,21 @@
+line-length = 100
+indent-width = 4
+target-version = "py313"
+
+[lint]
+select = [
+    "E",    # pycodestyle errors
+    "F",    # pyflakes（未使用インポート含む）
+    "I",    # isort
+    "B",    # flake8-bugbear
+    "UP",   # pyupgrade
+]
+ignore = [
+    "E501", # 行の長さ（line-lengthで管理するため）
+]
+
+[format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "lf"

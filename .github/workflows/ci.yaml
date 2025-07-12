@@ -9,7 +9,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     defaults:
-      working-directory: ddd
+      run:
+        working-directory: ddd
     steps:
       - uses: actions/checkout@v4
 

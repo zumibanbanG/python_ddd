@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
+
 from .task import Task, TaskId
+
 
 class TaskRepository(ABC):
     @abstractmethod

@@ -1,4 +1,4 @@
-name: Lint & Type Check
+name: CI
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - "ddd/src/**"
 
 jobs:
-  lint:
+  ci:
     runs-on: ubuntu-latest
     defaults:
       run:

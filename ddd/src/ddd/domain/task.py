@@ -8,17 +8,17 @@ from datetime import datetime
 class TaskStatus:
     ALLOWED_STATUSES = {"todo", "done"}
 
-    def __init__(self, status: str):
-        if status not in self.ALLOWED_STATUSES:
+    def __init__(self, value: str) -> None:
+        if value not in self.ALLOWED_STATUSES:
             raise ValueError(
-                f"Invalid status: {status}. Allowed statuses are {self.ALLOWED_STATUSES}."
+                f"Invalid status: {value}. Allowed statuses are {self.ALLOWED_STATUSES}."
             )
-        self.status = status
+        self.value = value
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, TaskStatus):
             return NotImplemented
-        return self.status == other.status
+        return self.value == other.value
 
 
 # タスクID
@@ -37,7 +37,7 @@ class TaskId:
 class TaskTitle:
     value: str
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.value or self.value.isspace():
             raise ValueError("Task title cannot be empty.")
 
@@ -47,7 +47,7 @@ class TaskTitle:
 class TaskDueDate:
     value: datetime | None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.value is not None and not isinstance(self.value, datetime):
             raise ValueError("Due date must be a datetime object or None.")
 
@@ -62,7 +62,7 @@ class Task:
     status: TaskStatus
     due_date: TaskDueDate
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not isinstance(self.id, TaskId):
             raise TypeError("id must be an instance of TaskId.")
         if not isinstance(self.title, TaskTitle):
@@ -72,5 +72,5 @@ class Task:
         if not isinstance(self.due_date, TaskDueDate):
             raise TypeError("due_date must be an instance of TaskDueDate.")
 
-    def complete(self):
+    def complete(self) -> None:
         self.status = TaskStatus("done")

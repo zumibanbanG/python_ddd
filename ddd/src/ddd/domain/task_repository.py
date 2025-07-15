@@ -2,6 +2,8 @@ from abc import ABC, abstractmethod
 
 from .task import Task, TaskId
 
+""" タスクリポジトリのインターフェース """
+
 
 class TaskRepository(ABC):
     @abstractmethod

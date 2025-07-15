@@ -1,6 +1,8 @@
-from ddd.infrastructure.in_memory_task_repository import InMemoryTaskRepository
-from ddd.domain.task import Task, TaskId, TaskTitle, TaskStatus, TaskDueDate
 from datetime import datetime
+
+from ddd.domain.task import Task, TaskDueDate, TaskId, TaskStatus, TaskTitle
+from ddd.infrastructure.in_memory_task_repository import InMemoryTaskRepository
+
 
 def main() -> None:
     repo = InMemoryTaskRepository()
@@ -10,7 +12,7 @@ def main() -> None:
         id=TaskId("1"),
         title=TaskTitle("テストタスク"),
         status=TaskStatus("todo"),
-        due_date=TaskDueDate(datetime.now())
+        due_date=TaskDueDate(datetime.now()),
     )
 
     # 追加
@@ -24,6 +26,7 @@ def main() -> None:
     # 削除
     repo.remove(TaskId("1"))
     print("削除後:", repo.list_all())
+
 
 if __name__ == "__main__":
     main()

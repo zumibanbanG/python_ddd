@@ -1,12 +1,12 @@
-from typing import Dict
-from ddd.domain.task_repository import TaskRepository
 from ddd.domain.task import Task, TaskId
+from ddd.domain.task_repository import TaskRepository
 
 """ インメモリのタスクリポジトリ実装 """
 
+
 class InMemoryTaskRepository(TaskRepository):
     def __init__(self) -> None:
-        self._tasks: Dict[str, Task]  = {}
+        self._tasks: dict[str, Task] = {}
 
     def add(self, task: Task) -> None:
         self._tasks[task.id.value] = task

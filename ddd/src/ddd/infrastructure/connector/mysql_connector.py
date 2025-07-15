@@ -1,5 +1,7 @@
-import mysql.connector
 from typing import Any
+
+import mysql.connector
+
 
 class MySQLConnector:
     """MySQL接続のためのクラス"""

@@ -1,8 +1,10 @@
 from datetime import datetime
-from ddd.domain.task import Task, TaskId, TaskTitle, TaskStatus, TaskDueDate
-from ddd.infrastructure.mysql_task_repository import MySQLTaskRepository
-from ddd.infrastructure.connector.mysql_connector import MySQLConnector
 from typing import Any
+
+from ddd.domain.task import Task, TaskDueDate, TaskId, TaskStatus, TaskTitle
+from ddd.infrastructure.connector.mysql_connector import MySQLConnector
+from ddd.infrastructure.mysql_task_repository import MySQLTaskRepository
+
 
 def main() -> None:
     # MySQL接続の初期化
@@ -17,7 +19,7 @@ def main() -> None:
             id=TaskId("2"),
             title=TaskTitle("test task"),
             status=TaskStatus("todo"),
-            due_date=TaskDueDate(datetime.now())
+            due_date=TaskDueDate(datetime.now()),
         )
         task_repository.add(task)
         print("タスクを追加しました:", task)
@@ -34,6 +36,7 @@ def main() -> None:
 
     finally:
         connection.close()
+
 
 if __name__ == "__main__":
     main()

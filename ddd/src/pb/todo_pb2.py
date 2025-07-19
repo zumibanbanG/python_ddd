@@ -24,17 +24,17 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\ntodo.proto\"P\n\x11\x43reateTaskRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x0e\n\x06status\x18\x03 \x01(\t\x12\x10\n\x08\x64ue_date\x18\x04 \x01(\t\" \n\x12\x43reateTaskResponse\x12\n\n\x02id\x18\x01 \x01(\t2>\n\x05Tasks\x12\x35\n\nCreateTask\x12\x12.CreateTaskRequest\x1a\x13.CreateTaskResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\ntodo.proto\"M\n\x0e\x41\x64\x64TaskRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x0e\n\x06status\x18\x03 \x01(\t\x12\x10\n\x08\x64ue_date\x18\x04 \x01(\t\"\x1d\n\x0f\x41\x64\x64TaskResponse\x12\n\n\x02id\x18\x01 \x01(\t25\n\x05Tasks\x12,\n\x07\x41\x64\x64Task\x12\x0f.AddTaskRequest\x1a\x10.AddTaskResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'todo_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_CREATETASKREQUEST']._serialized_start=14
-  _globals['_CREATETASKREQUEST']._serialized_end=94
-  _globals['_CREATETASKRESPONSE']._serialized_start=96
-  _globals['_CREATETASKRESPONSE']._serialized_end=128
-  _globals['_TASKS']._serialized_start=130
-  _globals['_TASKS']._serialized_end=192
+  _globals['_ADDTASKREQUEST']._serialized_start=14
+  _globals['_ADDTASKREQUEST']._serialized_end=91
+  _globals['_ADDTASKRESPONSE']._serialized_start=93
+  _globals['_ADDTASKRESPONSE']._serialized_end=122
+  _globals['_TASKS']._serialized_start=124
+  _globals['_TASKS']._serialized_end=177
 # @@protoc_insertion_point(module_scope)

@@ -6,16 +6,16 @@ from pb import todo_pb2, todo_pb2_grpc
 
 
 class TasksServicer(todo_pb2_grpc.TasksServicer):
-    def CreateTask(
-        self, request: todo_pb2.CreateTaskRequest, context: grpc.ServicerContext
-    ) -> todo_pb2.CreateTaskResponse:
+    def AddTask(
+        self, request: todo_pb2.AddTaskRequest, context: grpc.ServicerContext
+    ) -> todo_pb2.AddTaskResponse:
         # ここでタスクを作成するロジックを実装
         print(
             f"Creating task with ID: {request.id}, Title: {request.title}, Status: {request.status}, Due Date: {request.due_date}"
         )
 
         # レスポンスを返す
-        return todo_pb2.CreateTaskResponse(id=request.id)
+        return todo_pb2.AddTaskResponse(id=request.id)
 
 
 def serve() -> None:

@@ -34,17 +34,17 @@ class TasksStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.CreateTask = channel.unary_unary(
-                '/Tasks/CreateTask',
-                request_serializer=todo__pb2.CreateTaskRequest.SerializeToString,
-                response_deserializer=todo__pb2.CreateTaskResponse.FromString,
+        self.AddTask = channel.unary_unary(
+                '/Tasks/AddTask',
+                request_serializer=todo__pb2.AddTaskRequest.SerializeToString,
+                response_deserializer=todo__pb2.AddTaskResponse.FromString,
                 _registered_method=True)
 
 
 class TasksServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def CreateTask(self, request, context):
+    def AddTask(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -53,10 +53,10 @@ class TasksServicer(object):
 
 def add_TasksServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'CreateTask': grpc.unary_unary_rpc_method_handler(
-                    servicer.CreateTask,
-                    request_deserializer=todo__pb2.CreateTaskRequest.FromString,
-                    response_serializer=todo__pb2.CreateTaskResponse.SerializeToString,
+            'AddTask': grpc.unary_unary_rpc_method_handler(
+                    servicer.AddTask,
+                    request_deserializer=todo__pb2.AddTaskRequest.FromString,
+                    response_serializer=todo__pb2.AddTaskResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -70,7 +70,7 @@ class Tasks(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def CreateTask(request,
+    def AddTask(request,
             target,
             options=(),
             channel_credentials=None,
@@ -83,9 +83,9 @@ class Tasks(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/Tasks/CreateTask',
-            todo__pb2.CreateTaskRequest.SerializeToString,
-            todo__pb2.CreateTaskResponse.FromString,
+            '/Tasks/AddTask',
+            todo__pb2.AddTaskRequest.SerializeToString,
+            todo__pb2.AddTaskResponse.FromString,
             options,
             channel_credentials,
             insecure,

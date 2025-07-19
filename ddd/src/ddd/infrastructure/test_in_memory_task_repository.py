@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from ddd.domain.task import Task, TaskDueDate, TaskId, TaskStatus, TaskTitle
-from ddd.infrastructure.in_memory_task_repository import InMemoryTaskRepository
+from ddd.infrastructure.repository.in_memory_task_repository import InMemoryTaskRepository
 
 
 def main() -> None:

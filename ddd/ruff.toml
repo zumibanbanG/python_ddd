@@ -1,6 +1,7 @@
 line-length = 100
 indent-width = 4
 target-version = "py313"
+exclude = ["src/pb/"]
 
 [lint]
 select = [

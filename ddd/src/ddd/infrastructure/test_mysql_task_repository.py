@@ -3,7 +3,7 @@ from typing import Any
 
 from ddd.domain.task import Task, TaskDueDate, TaskId, TaskStatus, TaskTitle
 from ddd.infrastructure.connector.mysql_connector import MySQLConnector
-from ddd.infrastructure.mysql_task_repository import MySQLTaskRepository
+from ddd.infrastructure.repository.mysql_task_repository import MySQLTaskRepository
 
 
 def main() -> None:

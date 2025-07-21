@@ -48,9 +48,19 @@ st.subheader("Add Task")
 with st.form("add_task_form", clear_on_submit=True):
     title = st.text_input("Title", max_chars=100)
     due_date = st.date_input("Due Date (optional)", value=None, format="YYYY-MM-DD")
+    due_time = st.time_input("Due Time (optional)", value=None)
     submitted = st.form_submit_button("Add Task")
     if submitted and title:
-        due_date_str = due_date.isoformat() if due_date else ""
+        if due_date:
+            if due_time:
+                from datetime import datetime
+
+                due_datetime = datetime.combine(due_date, due_time)
+                due_date_str = due_datetime.isoformat()
+            else:
+                due_date_str = due_date.isoformat()
+        else:
+            due_date_str = ""
         stub.AddTask(todo_pb2.AddTaskRequest(title=title, status="todo", due_date=due_date_str))
         st.success("Task added!")
         st.rerun()

@@ -34,17 +34,50 @@ class TasksStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.CreateTask = channel.unary_unary(
-                '/Tasks/CreateTask',
-                request_serializer=todo__pb2.CreateTaskRequest.SerializeToString,
-                response_deserializer=todo__pb2.CreateTaskResponse.FromString,
+        self.AddTask = channel.unary_unary(
+                '/Tasks/AddTask',
+                request_serializer=todo__pb2.AddTaskRequest.SerializeToString,
+                response_deserializer=todo__pb2.AddTaskResponse.FromString,
+                _registered_method=True)
+        self.GetTask = channel.unary_unary(
+                '/Tasks/GetTask',
+                request_serializer=todo__pb2.GetTaskRequest.SerializeToString,
+                response_deserializer=todo__pb2.GetTaskResponse.FromString,
+                _registered_method=True)
+        self.RemoveTask = channel.unary_unary(
+                '/Tasks/RemoveTask',
+                request_serializer=todo__pb2.RemoveTaskRequest.SerializeToString,
+                response_deserializer=todo__pb2.RemoveTaskResponse.FromString,
+                _registered_method=True)
+        self.ListAllTask = channel.unary_unary(
+                '/Tasks/ListAllTask',
+                request_serializer=todo__pb2.ListAllTaskRequest.SerializeToString,
+                response_deserializer=todo__pb2.ListAllTaskResponse.FromString,
                 _registered_method=True)
 
 
 class TasksServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def CreateTask(self, request, context):
+    def AddTask(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetTask(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def RemoveTask(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ListAllTask(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -53,10 +86,25 @@ class TasksServicer(object):
 
 def add_TasksServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'CreateTask': grpc.unary_unary_rpc_method_handler(
-                    servicer.CreateTask,
-                    request_deserializer=todo__pb2.CreateTaskRequest.FromString,
-                    response_serializer=todo__pb2.CreateTaskResponse.SerializeToString,
+            'AddTask': grpc.unary_unary_rpc_method_handler(
+                    servicer.AddTask,
+                    request_deserializer=todo__pb2.AddTaskRequest.FromString,
+                    response_serializer=todo__pb2.AddTaskResponse.SerializeToString,
+            ),
+            'GetTask': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetTask,
+                    request_deserializer=todo__pb2.GetTaskRequest.FromString,
+                    response_serializer=todo__pb2.GetTaskResponse.SerializeToString,
+            ),
+            'RemoveTask': grpc.unary_unary_rpc_method_handler(
+                    servicer.RemoveTask,
+                    request_deserializer=todo__pb2.RemoveTaskRequest.FromString,
+                    response_serializer=todo__pb2.RemoveTaskResponse.SerializeToString,
+            ),
+            'ListAllTask': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListAllTask,
+                    request_deserializer=todo__pb2.ListAllTaskRequest.FromString,
+                    response_serializer=todo__pb2.ListAllTaskResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -70,7 +118,7 @@ class Tasks(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def CreateTask(request,
+    def AddTask(request,
             target,
             options=(),
             channel_credentials=None,
@@ -83,9 +131,90 @@ class Tasks(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/Tasks/CreateTask',
-            todo__pb2.CreateTaskRequest.SerializeToString,
-            todo__pb2.CreateTaskResponse.FromString,
+            '/Tasks/AddTask',
+            todo__pb2.AddTaskRequest.SerializeToString,
+            todo__pb2.AddTaskResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetTask(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/Tasks/GetTask',
+            todo__pb2.GetTaskRequest.SerializeToString,
+            todo__pb2.GetTaskResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def RemoveTask(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/Tasks/RemoveTask',
+            todo__pb2.RemoveTaskRequest.SerializeToString,
+            todo__pb2.RemoveTaskResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ListAllTask(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/Tasks/ListAllTask',
+            todo__pb2.ListAllTaskRequest.SerializeToString,
+            todo__pb2.ListAllTaskResponse.FromString,
             options,
             channel_credentials,
             insecure,

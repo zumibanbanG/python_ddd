@@ -2,6 +2,9 @@ syntax = "proto3";
 
 service Tasks {
   rpc AddTask (AddTaskRequest) returns (AddTaskResponse);
+  rpc GetTask (GetTaskRequest) returns (GetTaskResponse);
+  rpc RemoveTask (RemoveTaskRequest) returns (RemoveTaskResponse);
+  rpc ListAllTask (ListAllTaskRequest) returns (ListAllTaskResponse);
 }
 
 message AddTaskRequest {
@@ -13,4 +16,29 @@ message AddTaskRequest {
 
 message AddTaskResponse {
   string id = 1;
+}
+
+message GetTaskRequest {
+  string id = 1;
+}
+
+message GetTaskResponse {
+  string id = 1;
+  string title = 2;
+  string status = 3;
+  string due_date = 4;
+}
+
+message RemoveTaskRequest {
+  string id = 1;
+}
+
+message RemoveTaskResponse {
+  string id = 1;
+}
+
+message ListAllTaskRequest {}
+
+message ListAllTaskResponse {
+  repeated GetTaskResponse tasks = 1;
 }

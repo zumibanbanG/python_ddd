@@ -4,10 +4,10 @@
 ```
 cd ddd
 
-poetry run python -m grpc_tools.protoc \           
-  -I ./src/proto \     
+poetry run python -m grpc_tools.protoc \
+  -I ./src/proto \
   --python_out=./src/pb \
-  --pyi_out=./src/pb \      
+  --pyi_out=./src/pb \
   --grpc_python_out=./src/pb \
   ./src/proto/todo.proto
 ```
@@ -17,4 +17,14 @@ poetry run python -m grpc_tools.protoc \
 cd ddd
 
 PYTHONPATH=src poetry run python src/ddd/infrastructure/grpc/todo_grpc_server.py
+```
+
+- mysqlの立ち上げ
+```
+docker-compose up -d
+```
+
+- mysqlのログイン
+```
+docker exec -it mysql mysql -u todo_user -p todo_db
 ```

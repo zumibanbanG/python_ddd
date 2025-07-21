@@ -14,8 +14,8 @@ class MySQLTaskRepository(TaskRepository):
     def add(self, task: Task) -> None:
         cursor = self._connection.cursor()
         cursor.execute(
-            "INSERT INTO tasks (id, title, status, due_date) VALUES (%s, %s, %s, %s)",
-            (task.id.value, task.title.value, task.status.value, task.due_date.value),
+            "INSERT INTO tasks (title, status, due_date) VALUES (%s, %s, %s)",
+            (task.title.value, task.status.value, task.due_date.value),
         )
         self._connection.commit()
         cursor.close()
@@ -38,13 +38,13 @@ class MySQLTaskRepository(TaskRepository):
 
     def remove(self, task_id: TaskId) -> None:
         cursor = self._connection.cursor()
-        cursor.execute("DELETE FROM tasks WHERE id = %s", (task_id.value,))
+        cursor.execute("UPDATE tasks SET status = 'done' WHERE id = %s", (task_id.value,))
         self._connection.commit()
         cursor.close()
 
     def list_all(self) -> list[Task]:
         cursor = self._connection.cursor()
-        cursor.execute("SELECT id, title, status, due_date FROM tasks")
+        cursor.execute("SELECT id, title, status, due_date FROM tasks WHERE status != 'done'")
         rows = cursor.fetchall()
         cursor.close()
         return [

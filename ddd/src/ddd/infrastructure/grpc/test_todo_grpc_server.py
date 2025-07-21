@@ -11,10 +11,10 @@ def run() -> None:
 
     # Add a task
     add_request = todo_pb2.AddTaskRequest(
-        id="1", title="テストタスク", status="todo", due_date=datetime.now().isoformat()
+        title="test task2", status="todo", due_date=datetime.now().isoformat()
     )
-    response = stub.AddTask(add_request)
-    print(f"Add Task Response: id={response.id}")
+    stub.AddTask(add_request)
+    print("Add Task Done")
 
     # Get a task
     get_request = todo_pb2.GetTaskRequest(id="1")

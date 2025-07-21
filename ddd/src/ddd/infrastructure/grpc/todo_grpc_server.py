@@ -1,11 +1,13 @@
 from concurrent import futures
-from datetime import datetime
 
 import grpc
 
-from ddd.domain.task import Task, TaskDueDate, TaskId, TaskStatus, TaskTitle
 from ddd.infrastructure.connector.mysql_connector import MySQLConnector
 from ddd.infrastructure.repository.mysql_task_repository import MySQLTaskRepository
+from ddd.usecase.add_task_usecase import AddTaskUseCase
+from ddd.usecase.get_task_usecase import GetTaskUseCase
+from ddd.usecase.list_all_task_usecase import ListAllTaskUseCase
+from ddd.usecase.remove_task_usecase import RemoveTaskUseCase
 from pb import todo_pb2, todo_pb2_grpc
 
 
@@ -15,54 +17,54 @@ class TasksServicer(todo_pb2_grpc.TasksServicer):
         mysql_connector = MySQLConnector()
         # MySQLタスクリポジトリのインスタンス化
         self.repo = MySQLTaskRepository(mysql_connector.get_connection())
+        # ユースケースのインスタンス化
+        self.add_task_usecase = AddTaskUseCase(self.repo)
+        self.get_task_usecase = GetTaskUseCase(self.repo)
+        self.list_all_task_usecase = ListAllTaskUseCase(self.repo)
+        self.remove_task_usecase = RemoveTaskUseCase(self.repo)
 
     def AddTask(
         self, request: todo_pb2.AddTaskRequest, context: grpc.ServicerContext
     ) -> todo_pb2.AddTaskResponse:
-        due_date = None
-        if request.due_date:
-            due_date = datetime.fromisoformat(request.due_date)
-        task = Task(
-            id=TaskId(request.id),
-            title=TaskTitle(request.title),
-            status=TaskStatus(request.status),
-            due_date=TaskDueDate(due_date),
+        task = self.add_task_usecase.execute(
+            title=request.title,
+            status=request.status,
+            due_date=request.due_date,
         )
-        self.repo.add(task)
         return todo_pb2.AddTaskResponse(id=task.id.value)
 
     def GetTask(
         self, request: todo_pb2.GetTaskRequest, context: grpc.ServicerContext
     ) -> todo_pb2.GetTaskResponse:
-        task_id = TaskId(request.id)
-        task = self.repo.get(task_id)
+        task_id = request.id
+        task = self.get_task_usecase.execute(task_id)
         if not task:
             context.set_code(grpc.StatusCode.NOT_FOUND)
-            context.set_details(f"Task with ID {request.id} not found")
+            context.set_details(f"Task with id {task_id} not found")
             return todo_pb2.GetTaskResponse()
-        else:
-            return todo_pb2.GetTaskResponse(
-                id=task.id.value,
-                title=task.title.value,
-                status=task.status.value,
-                due_date=task.due_date.value.isoformat() if task.due_date.value else "",
-            )
+        return todo_pb2.GetTaskResponse(
+            id=task.id.value,
+            title=task.title.value,
+            status=task.status.value,
+            due_date=task.due_date.value.isoformat() if task.due_date.value else "",
+        )
 
     def RemoveTask(
         self, request: todo_pb2.RemoveTaskRequest, context: grpc.ServicerContext
     ) -> todo_pb2.RemoveTaskResponse:
-        task_id = TaskId(request.id)
-        self.repo.remove(task_id)
-        return todo_pb2.RemoveTaskResponse(id=request.id)
+        task_id = request.id
+        try:
+            self.remove_task_usecase.execute(task_id)
+        except ValueError as e:
+            context.set_code(grpc.StatusCode.NOT_FOUND)
+            context.set_details(str(e))
+            return todo_pb2.RemoveTaskResponse()
+        return todo_pb2.RemoveTaskResponse(id=task_id)
 
     def ListAllTask(
         self, request: todo_pb2.ListAllTaskRequest, context: grpc.ServicerContext
     ) -> todo_pb2.ListAllTaskResponse:
-        tasks = self.repo.list_all()
-        if not tasks:
-            context.set_code(grpc.StatusCode.NOT_FOUND)
-            context.set_details("No tasks found")
-            return todo_pb2.ListAllTaskResponse()
+        tasks = self.list_all_task_usecase.execute()
         return todo_pb2.ListAllTaskResponse(
             tasks=[
                 todo_pb2.GetTaskResponse(
